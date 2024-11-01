@@ -1,0 +1,9 @@
+Package: stat-dashboard
+Version: 1.0.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: systemd
+Maintainer: Anthon Krotov krotov.anthon@yandex.ru
+Description: golang daemon for grep metrics and make dashboards
+Homepage: https://github.com/ToffaKrtek/stat-dashboard

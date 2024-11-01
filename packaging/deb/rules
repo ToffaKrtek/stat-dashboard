@@ -1,0 +1,11 @@
+!/usr/bin/make -f
+
+%:
+    dh $@
+
+override_dh_auto_build:
+    go build -o stat-dashboard ./cmd/daemon/stat-dashboard
+
+override_dh_auto_install:
+    install -D -m 0755 stat-dashboard $(DESTDIR)/usr/local/bin/stat-dashboard
+    install -D -m 0644 debian/stat-dashboard.service $(DESTDIR)/lib/systemd/system/stat-dashboard.service
