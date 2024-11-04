@@ -13,6 +13,36 @@ import (
 	"github.com/shirou/gopsutil/mem"
 )
 
+var fullTime *time.Duration
+var statFileName *string
+var plotFileName *string
+var title *string
+var legends *[]string
+
+func Run(
+	mchan chan bool,
+) {
+	go func() {
+		for {
+			now := time.Now()
+
+			nextRun := time.Date(now.Year(), now.Month(), now.Day(), now.Hour(), now.Minute(), now.Second(), 0, now.Location())
+
+			if now.After(nextRun) {
+				nextRun = nextRun.Add(*fullTime)
+			}
+			time.Sleep(time.Until(nextRun))
+
+			fmt.Println("Запуск генерации графика и сброса данных...")
+			//TODO:: send by channel
+			//cus didn't wait before clear
+			//MakeDashBoardFromCSV(*statFileName, *plotFileName, *title, *legends)
+			mchan <- true
+			ClearCSV(*statFileName)
+		}
+	}()
+}
+
 type Metrics struct {
 	Load1         float64
 	Load5         float64
